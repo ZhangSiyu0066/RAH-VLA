@@ -22,7 +22,7 @@ The method introduces two coupled modules. **DRIS** performs coarse-to-fine toke
 
 **Paper**: [RAH-VLA: Resolution-Adaptive Hierarchical Vision-Language Alignment for Multimodal Remote Sensing Understanding](RAH_VLA__Resolution_Adaptive_Hierarchical_Vision_Language_Alignment_for_Multimodal_Remote_Sensing_Understanding.pdf)
 
-## Overview
+## 🔭 Overview
 
 ### Motivation
 
@@ -51,7 +51,38 @@ The implementation used in this repository follows the paper setting: Vicuna-7B-
 
 <p align="center"><i>Fig. 2. RAH-VLA framework. DRIS performs resolution-adaptive visual encoding, and MS-VLAM performs hierarchical alignment across object, region, and global levels.</i></p>
 
-## Main Results
+### DRIS: Dynamic Resolution Input Strategy
+
+DRIS follows a coarse-to-fine visual encoding pipeline. It first downsamples the remote sensing image to capture global context with low computational cost, then estimates token-level saliency to select the most informative regions. These selected ROIs are refined at high resolution, while less informative homogeneous areas remain represented by coarse features. Finally, coarse and fine features are projected and fused into a resolution-adaptive representation.
+
+This design is especially useful for remote sensing scenes, where small objects such as vehicles, buildings, roads, and storage tanks may occupy only a tiny fraction of a large image. Instead of processing the full image at uniformly high resolution, DRIS allocates high-resolution computation only to salient regions.
+
+<p align="center">
+  <img src="images/Fig.3.png" width="95%" alt="Dynamic Resolution Input Strategy">
+</p>
+
+<p align="center"><i>Fig. 3. DRIS pipeline. Low-resolution global perception estimates saliency, top-K ROIs are refined at high resolution, and cross-resolution fusion produces a compact but detail-preserving representation.</i></p>
+
+### MS-VLAM: Multi-scale Vision-Language Alignment
+
+MS-VLAM aligns visual and textual semantics at three complementary levels. At the object level, fine-grained visual patches are matched with entity tokens such as buildings, roads, trees, or cars. At the region level, local contextual areas are aligned with phrases such as residential area or parking lot. At the global level, the whole image representation is aligned with sentence-level scene semantics.
+
+The final training objective combines caption generation with hierarchical alignment losses:
+
+```text
+L_align = alpha * L_obj + beta * L_reg + gamma * L_glob
+L = L_caption + delta * L_align
+```
+
+In practice, this encourages the model to produce captions that are not only fluent, but also grounded in fine-grained objects, local regions, and global scene context.
+
+<p align="center">
+  <img src="images/Fig.4.png" width="95%" alt="Multi-scale Vision-Language Alignment Mechanism">
+</p>
+
+<p align="center"><i>Fig. 4. MS-VLAM mechanism. Object-, region-, and global-level visual features are aligned with corresponding textual units under hierarchical constraint guidance.</i></p>
+
+## 📊 Main Results
 
 ### Result Highlights
 
@@ -124,7 +155,7 @@ To test cross-modality transfer, RAH-VLA is evaluated on hyperspectral image cap
 
 These results show that DRIS and MS-VLAM are complementary: adaptive visual perception improves feature quality, while hierarchical alignment improves semantic consistency. RAH-VLA also lowers computation and memory cost compared with fixed-resolution processing.
 
-## Visualization
+## 🖼️ Visualization
 
 <p align="center">
   <img src="images/visualization1.png" width="95%" alt="RAH-VLA visualization on optical remote sensing images">
