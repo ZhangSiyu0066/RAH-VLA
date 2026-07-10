@@ -264,7 +264,7 @@ config = get_config('dris_msvlam_no_obj')  # MS-VLAM without object-level alignm
 
 ## 🔧 Training
 
-### 使用 DRIS-MSVLAM 训练
+### Train with DRIS-MSVLAM
 
 ```bash
 python geochat/train/train.py \
@@ -284,39 +284,39 @@ python geochat/train/train.py \
     --bf16 True
 ```
 
-### 训练参数说明
+### Training Arguments
 
-#### DRIS 参数
+#### DRIS Arguments
 
-| 参数 | 默认值 | 说明 |
+| Argument | Default | Description |
 |------|--------|------|
-| `use_dris` | `False` | 启用 DRIS |
-| `dris_low_res_size` | `224` | 低分辨率大小 |
-| `dris_high_res_size` | `504` | 高分辨率大小 |
-| `dris_roi_threshold` | `0.5` | ROI 选择阈值 |
-| `dris_top_k_rois` | `5` | 选择 ROI 数量 |
-| `dris_saliency_kernel_size` | `5` | 高斯核大小 |
+| `use_dris` | `False` | Enable DRIS. |
+| `dris_low_res_size` | `224` | Low-resolution input size. |
+| `dris_high_res_size` | `504` | High-resolution input size. |
+| `dris_roi_threshold` | `0.5` | ROI selection threshold. |
+| `dris_top_k_rois` | `5` | Number of selected ROIs. |
+| `dris_saliency_kernel_size` | `5` | Gaussian kernel size. |
 
-#### MS-VLAM 参数
+#### MS-VLAM Arguments
 
-| 参数 | 默认值 | 说明 |
+| Argument | Default | Description |
 |------|--------|------|
-| `use_msvlam` | `False` | 启用 MS-VLAM |
-| `msvlam_alignment_dim` | `768` | 对齐空间维度 |
-| `msvlam_num_regions` | `16` | 区域数量 |
-| `msvlam_alpha` | `1.0` | 对象级损失权重 (α) |
-| `msvlam_beta` | `1.0` | 区域级损失权重 (β) |
-| `msvlam_gamma` | `1.0` | 全局级损失权重 (γ) |
-| `msvlam_mu` | `0.5` | 硬匹配 vs 对比学习权重 (μ) |
-| `msvlam_temperature` | `0.07` | 温度参数 (τ) |
+| `use_msvlam` | `False` | Enable MS-VLAM. |
+| `msvlam_alignment_dim` | `768` | Alignment-space dimension. |
+| `msvlam_num_regions` | `16` | Number of region-level features. |
+| `msvlam_alpha` | `1.0` | Object-level loss weight (alpha). |
+| `msvlam_beta` | `1.0` | Region-level loss weight (beta). |
+| `msvlam_gamma` | `1.0` | Global-level loss weight (gamma). |
+| `msvlam_mu` | `0.5` | Balance between hard matching and contrastive learning. |
+| `msvlam_temperature` | `0.07` | Temperature parameter. |
 
-#### 损失参数
+#### Loss Arguments
 
-| 参数 | 默认值 | 说明 |
+| Argument | Default | Description |
 |------|--------|------|
-| `delta` | `1.0` | 对齐损失权重 (δ) |
-| `label_smoothing` | `0.0` | 标签平滑 |
-| `ignore_index` | `-100` | 忽略索引 |
+| `delta` | `1.0` | Alignment loss weight (delta). |
+| `label_smoothing` | `0.0` | Label smoothing factor. |
+| `ignore_index` | `-100` | Ignored label index. |
 
 ---
 
