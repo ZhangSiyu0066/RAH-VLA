@@ -30,13 +30,6 @@
   </a>
 </p>
 
-<p align="center">
-  <b>Resolution-adaptive visual perception + hierarchical vision-language alignment for optical and hyperspectral remote sensing understanding.</b>
-</p>
-
-RAH-VLA is a multimodal remote sensing vision-language framework built upon GeoChat. It addresses two practical limitations of existing remote sensing VLMs: fixed-resolution visual encoding, which can miss small objects or waste computation on homogeneous regions, and single-scale image-text alignment, which weakens object- and region-level semantic correspondence.
-
-The method introduces two coupled modules. **DRIS** performs coarse-to-fine token-level visual encoding and keeps high-resolution information for salient regions. **MS-VLAM** projects visual features into the language space and aligns them at object, region, and global levels. Together, they improve captioning, grounding, reasoning, hyperspectral generalization, and inference efficiency.
 
 ## 🔭 Overview
 
@@ -49,6 +42,12 @@ Remote sensing images contain extreme scale diversity: large scenes, dense regio
 </p>
 
 <p align="center"><i>Fig. 1. Motivation of RAH-VLA. The framework handles extreme scale variation and semantic mismatch through adaptive visual perception and hierarchical vision-language alignment.</i></p>
+
+### RAH-VLA
+
+RAH-VLA is a multimodal remote sensing vision-language framework built upon GeoChat. It addresses two practical limitations of existing remote sensing VLMs: fixed-resolution visual encoding, which can miss small objects or waste computation on homogeneous regions, and single-scale image-text alignment, which weakens object- and region-level semantic correspondence.
+
+The method introduces two coupled modules. **DRIS** performs coarse-to-fine token-level visual encoding and keeps high-resolution information for salient regions. **MS-VLAM** projects visual features into the language space and aligns them at object, region, and global levels. Together, they improve captioning, grounding, reasoning, hyperspectral generalization, and inference efficiency.
 
 ### Framework
 
