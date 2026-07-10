@@ -66,6 +66,8 @@ The implementation used in this repository follows the paper setting: Vicuna-7B-
 
 <p align="center"><i>Fig. 2. RAH-VLA framework. DRIS performs resolution-adaptive visual encoding, and MS-VLAM performs hierarchical alignment across object, region, and global levels.</i></p>
 
+## 🧠 Method
+
 ### DRIS: Dynamic Resolution Input Strategy
 
 DRIS is the resolution-adaptive visual encoder of RAH-VLA. Remote sensing images usually contain both large homogeneous areas and tiny semantic objects. Processing every patch at high resolution is expensive, while processing the whole image at low resolution loses boundaries, textures, and small objects. DRIS resolves this trade-off with a coarse-to-fine allocation rule.
