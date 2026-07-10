@@ -378,22 +378,22 @@ config_no_global = get_config('dris_msvlam_no_global')
 
 ## 💡 Practical Tips
 
-### 内存优化
-- 使用梯度累积增加有效批次大小
-- 减少批次大小
-- 降低 `dris_high_res_size`
-- 减少 ROI 数量
+### Memory Optimization
+- Use gradient accumulation to increase the effective batch size
+- Reduce the batch size
+- Lower `dris_high_res_size`
+- Reduce the number of ROIs
 
-### 训练加速
-- 启用混合精度 (`--bf16 True`)
-- 使用低分辨率作为起点
-- 减少区域数量
+### Training Acceleration
+- Enable mixed precision (`--bf16 True`)
+- Use a lower resolution as the starting point
+- Reduce the number of regions
 
-### 性能调优
-- 调整损失权重 (α, β, γ, δ)
-- 增加 warmup 步数
-- 使用学习率调度
-- 确保数据质量
+### Performance Tuning
+- Tune loss weights (alpha, beta, gamma, delta)
+- Increase warmup steps
+- Use a learning-rate scheduler
+- Ensure data quality
 
 ---
 
