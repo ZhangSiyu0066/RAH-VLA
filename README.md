@@ -55,6 +55,12 @@ The implementation used in this repository follows the paper setting: Vicuna-7B-
 
 DRIS is the resolution-adaptive visual encoder of RAH-VLA. Remote sensing images usually contain both large homogeneous areas and tiny semantic objects. Processing every patch at high resolution is expensive, while processing the whole image at low resolution loses boundaries, textures, and small objects. DRIS resolves this trade-off with a coarse-to-fine allocation rule.
 
+<p align="center">
+  <img src="images/Fig.3.png" width="95%" alt="Dynamic Resolution Input Strategy">
+</p>
+
+<p align="center"><i>Fig. 3. DRIS pipeline. Low-resolution global perception estimates saliency, top-K ROIs are refined at high resolution, and cross-resolution fusion produces a compact but detail-preserving representation.</i></p>
+
 The dynamic resolution assignment is formulated as:
 
 ```text
@@ -90,15 +96,15 @@ F_fused        = Upsample(F_tilde_coarse) + Crop(F_tilde_fine, Omega)
 
 This projection-based alignment lets the model preserve global scene context from the low-resolution branch while injecting high-resolution details from selected ROIs. Therefore, DRIS is not only an efficiency module; it also produces object-aware and region-aware visual representations for the downstream MS-VLAM alignment.
 
-<p align="center">
-  <img src="images/Fig.3.png" width="95%" alt="Dynamic Resolution Input Strategy">
-</p>
-
-<p align="center"><i>Fig. 3. DRIS pipeline. Low-resolution global perception estimates saliency, top-K ROIs are refined at high resolution, and cross-resolution fusion produces a compact but detail-preserving representation.</i></p>
-
 ### MS-VLAM: Multi-scale Vision-Language Alignment
 
 MS-VLAM organizes the DRIS-enhanced visual tokens into three semantic levels and aligns each level with the corresponding textual units. This is designed for remote sensing scenes where semantics are distributed across small objects, local regions, and global scene context.
+
+<p align="center">
+  <img src="images/Fig.4.png" width="95%" alt="Multi-scale Vision-Language Alignment Mechanism">
+</p>
+
+<p align="center"><i>Fig. 4. MS-VLAM mechanism. Object-, region-, and global-level visual features are aligned with corresponding textual units under hierarchical constraint guidance.</i></p>
 
 **Object-level alignment.** Fine-grained object regions are aligned with entity-level text tokens. Given the visual feature map `V` and the `p`-th candidate object region `B_p`, the object visual and textual features are:
 
@@ -154,12 +160,6 @@ L = L_caption + delta * L_align
 ```
 
 This objective encourages generated captions and responses to be fluent, visually grounded, and semantically consistent across multiple spatial granularities.
-
-<p align="center">
-  <img src="images/Fig.4.png" width="95%" alt="Multi-scale Vision-Language Alignment Mechanism">
-</p>
-
-<p align="center"><i>Fig. 4. MS-VLAM mechanism. Object-, region-, and global-level visual features are aligned with corresponding textual units under hierarchical constraint guidance.</i></p>
 
 ## 📊 Main Results
 
