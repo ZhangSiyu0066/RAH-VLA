@@ -185,26 +185,26 @@ RAH-VLA/
 ├── geochat/
 │   ├── model/
 │   │   ├── multimodal_encoder/
-│   │   │   ├── dris_encoder.py          # DRIS 编码器
-│   │   │   ├── dris_builder.py         # DRIS 构建器
-│   │   │   ├── clip_encoder.py         # CLIP 编码器
-│   │   │   └── builder.py              # 编码器构建器
+│   │   │   ├── dris_encoder.py          # DRIS encoder
+│   │   │   ├── dris_builder.py         # DRIS builder
+│   │   │   ├── clip_encoder.py         # CLIP encoder
+│   │   │   └── builder.py              # encoder builder
 │   │   ├── multimodal_projector/
-│   │   │   ├── ms_vlam_projector.py    # MS-VLAM 投影器
-│   │   │   └── builder.py              # 投影器构建器
-│   │   ├── alignment_loss.py           # 多尺度对齐损失
-│   │   └── geochat_arch.py             # 模型架构
-│   ├── eval/                            # 评估脚本
-│   ├── train/                           # 训练脚本
-│   └── serve/                           # 推理服务
+│   │   │   ├── ms_vlam_projector.py    # MS-VLAM projector
+│   │   │   └── builder.py              # projector builder
+│   │   ├── alignment_loss.py           # multi-scale alignment loss
+│   │   └── geochat_arch.py             # model architecture
+│   ├── eval/                            # evaluation scripts
+│   ├── train/                           # training scripts
+│   └── serve/                           # inference service
 ├── config/
-│   └── dris_msvlam_config.py          # DRIS-MSVLAM 配置
-├── demo_dris_msvlam.py                # 演示脚本
-├── README_DRIS_MSVLAM.md              # DRIS-MSVLAM 详细文档
+│   └── dris_msvlam_config.py          # DRIS-MSVLAM configuration
+├── demo_dris_msvlam.py                # demo script
+├── README_DRIS_MSVLAM.md              # DRIS-MSVLAM detailed documentation
 ├── docs/
-│   └── DRIS_MSVLAM.md                 # 详细技术文档
-├── scripts/                           # 训练脚本
-└── images/                            # 图像资源
+│   └── DRIS_MSVLAM.md                 # detailed technical documentation
+├── scripts/                           # training scripts
+└── images/                            # image assets
 ```
 
 ---
