@@ -351,24 +351,24 @@ These documents include:
 
 ## 🧪 Ablation Studies
 
-### 可用配置
+### Available Configurations
 
 ```python
 from config.dris_msvlam_config import ABLATION_CONFIGS
 
-# 基线 (无 DRIS, 无 MS-VLAM)
+# Baseline without DRIS or MS-VLAM
 config_baseline = get_config('baseline')
 
-# 仅 DRIS
+# DRIS only
 config_dris_only = get_config('dris_only')
 
-# 仅 MS-VLAM
+# MS-VLAM only
 config_msvlam_only = get_config('msvlam_only')
 
-# 完整模型 (DRIS + MS-VLAM)
+# Full model with DRIS and MS-VLAM
 config_full = get_config('full_model')
 
-# MS-VLAM 消融
+# MS-VLAM ablations
 config_no_obj = get_config('dris_msvlam_no_obj')
 config_no_region = get_config('dris_msvlam_no_region')
 config_no_global = get_config('dris_msvlam_no_global')
@@ -399,70 +399,70 @@ config_no_global = get_config('dris_msvlam_no_global')
 
 ## 🔬 Core Algorithms
 
-### DRIS (动态分辨率输入)
+### DRIS: Dynamic Resolution Input Strategy
 
-**原理**: 实现粗到细的两阶段处理策略
+**Principle**: DRIS performs coarse-to-fine two-stage visual processing.
 
 ```python
-# Eq. (1) - 动态分辨率分配
+# Eq. (1) - dynamic resolution assignment
 R(x,y) = {
     R_high if s(x,y) ≥ τ
     R_low otherwise
 }
 
-# Eq. (2) - FPN 特征融合
+# Eq. (2) - FPN feature fusion
 F_fused = Upsample(F_coarse) + Crop(F_fine, Ω)
 
-# Eq. (3) - ROI 选择
+# Eq. (3) - ROI selection
 P_ROI = Topk(GaussianBlur(A_coarse), k)
 ```
 
-**优势**:
-- 减少计算开销 2-3 倍
-- 保留关键细节信息
-- 自适应资源分配
+**Benefits**:
+- Reduces computational overhead by 2-3x
+- Preserves key local details
+- Allocates visual resolution adaptively
 
-### MS-VLAM (多尺度视觉-语言对齐)
+### MS-VLAM: Multi-scale Vision-Language Alignment
 
-**原理**: 实现三层级对齐机制
+**Principle**: MS-VLAM aligns image-text representations at object, region, and global levels.
 
 ```python
-# Eq. (7) - 对象级损失
+# Eq. (7) - object-level loss
 L_obj = 1 - (1/P) Σ w_p · cos(v_obj^(p), o_obj^(p))
 
-# Eq. (11) - 区域级损失
+# Eq. (11) - region-level loss
 L_reg = μ · L_reg^hard + (1-μ) · L_reg^NCE
 
-# Eq. (12) - 全局级损失
+# Eq. (12) - global-level loss
 L_glob = 1 - cos(SPP(V), t_[CLS])
 
-# Eq. (13) - 总对齐损失
+# Eq. (13) - total alignment loss
 L_align = α · L_obj + β · L_reg + γ · L_glob
 ```
 
-**优势**:
-- 捕获多粒度语义
-- 增强跨模态一致性
-- 提升细粒度理解能力
+**Benefits**:
+- Captures multi-granularity semantics
+- Improves cross-modal consistency
+- Strengthens fine-grained understanding
 
 ---
 
 ## 🏗️ Architecture Notes
 
-RAH-VLA 基于 GeoChat (CVPR 2024) 架构，增强了以下能力：
+RAH-VLA is built on the GeoChat (CVPR 2024) architecture and extends it with the following capabilities:
 
-### 原始 GeoChat 能力
-- 图像和区域描述
-- 视觉问答 (VQA)
-- 场景分类
-- 视觉定位对话
-- 指代对象检测
+### Original GeoChat Capabilities
+- Image and region captioning
+- Visual question answering (VQA)
+- Scene classification
+- Visual grounding dialogue
+- Referring object detection
 
-### 增强 (DRIS-MSVLAM)
-- 动态分辨率处理，提升效率
-- 多尺度对齐机制，提升性能
-- 更好的细粒度理解
-- 改进的跨模态一致性
+### RAH-VLA Enhancements (DRIS-MSVLAM)
+- Dynamic resolution processing for better efficiency
+- Multi-scale alignment for stronger performance
+- Better fine-grained understanding
+- Improved cross-modal consistency
 
 ---
 
@@ -555,9 +555,9 @@ These results show that DRIS and MS-VLAM are complementary: adaptive visual perc
 
 ## 📜 Citation
 
-如果您在研究中使用了 RAH-VLA 或 DRIS-MSVLAM，请引用以下论文：
+If you use RAH-VLA or DRIS-MSVLAM in your research, please cite the following works:
 
-### GeoChat (基线)
+### GeoChat Baseline
 ```bibtex
 @article{kuckreja2023geochat,
         title={GeoChat: Grounded Large Vision-Language Model for Remote Sensing},
@@ -567,7 +567,7 @@ These results show that DRIS and MS-VLAM are complementary: adaptive visual perc
 }
 ```
 
-### RAH-VLA (本实现)
+### RAH-VLA
 ```bibtex
 @article{zhang2025multimodal,
   title={RAH-VLA: Resolution-Adaptive Hierarchical Vision-Language Alignment for Multimodal Remote Sensing Understanding},
@@ -581,46 +581,46 @@ These results show that DRIS and MS-VLAM are complementary: adaptive visual perc
 
 ## 🙏 Acknowledgements
 
-本项目基于以下开源项目：
+This project builds on the following open-source projects:
 - **[GeoChat](https://github.com/mbzuai-oryx/GeoChat)** - CVPR 2024
 - **[LLaVA](https://github.com/haotian-liu/LLaVA)** - Large Language-and-Vision Assistant
 - **[Vicuna](https://lmsys.org/blog/2023-03-30-vicuna/)** - Large Language Model
 
-感谢这些项目的作者发布的开源代码和模型。
+We thank the authors of these projects for releasing their code and model resources.
 
 ---
 
 ## 📄 License
 
-本项目遵循 Apache 2.0 许可证。详见 [LICENSE](LICENSE) 文件。
+This project is released under the Apache 2.0 License. See [LICENSE](LICENSE) for details.
 
 ---
 
 ## 🤝 Contributing
 
-欢迎贡献！请遵循以下步骤：
+Contributions are welcome. Please follow the standard GitHub workflow:
 
-1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启 Pull Request
+1. Fork this repository.
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a pull request.
 
 ---
 
 ## 📧 Contact
 
-如有问题或建议，请在 GitHub 上创建 issue。
+For questions or suggestions, please open an issue on GitHub.
 
 ---
 
 ## 🔗 Related Links
 
-- [GeoChat 原始仓库](https://github.com/mbzuai-oryx/GeoChat)
-- [GeoChat 项目页面](https://mbzuai-oryx.github.io/GeoChat)
-- [GeoChat 论文 (arXiv)](https://arxiv.org/abs/2311.15826)
+- [GeoChat repository](https://github.com/mbzuai-oryx/GeoChat)
+- [GeoChat project page](https://mbzuai-oryx.github.io/GeoChat)
+- [GeoChat paper (arXiv)](https://arxiv.org/abs/2311.15826)
 - [RAH-VLA arXiv](https://arxiv.org/abs/2512.23243)
 
 ---
 
-**注意**: 本实现用于研究和教育目的。如需用于商业用途，请联系原作者获取许可。
+**Note**: This implementation is intended for research and educational use. For commercial use, please contact the authors for permission.
