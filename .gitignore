@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+conda-meta/
+
+# Local IDE / agent state
+.vscode/
+.idea/
+.agents/
+
+# Logs and runtime files
+*.log
+*.pid
+wandb/
+runs/
+outputs/
+output/
+results/
+checkpoints/
+
+# Model weights and large generated artifacts
+*.bin
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.whl
+
+# Datasets / local storage
+/data/
+/datasets/
+/HyperCap-lfs/
+/autodl-fs/
+/autodl-tmp/
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+
+# OS files
+.DS_Store
+Thumbs.db
