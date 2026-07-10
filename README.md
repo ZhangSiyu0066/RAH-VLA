@@ -1,7 +1,7 @@
 # RAH-VLA: Resolution-Adaptive Hierarchical Vision-Language Alignment for Multimodal Remote Sensing Understanding
 
 <p align="center">
-  <img src="images/color_bar.svg" width="95%" height="10" alt="decorative color bar">
+  <img src="images/color_bar.svg" width="100%" height="10" alt="decorative color bar">
 </p>
 
 <p align="center">
