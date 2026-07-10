@@ -1,8 +1,28 @@
 # RAH-VLA: Resolution-Adaptive Hierarchical Vision-Language Alignment for Multimodal Remote Sensing Understanding
 
 <p align="center">
+  <b>Siyu Zhang<sup>1</sup>, Lianlei Shan<sup>2</sup>, Runhe Qiu<sup>1</sup>, Wenxin Zhong<sup>3</sup></b>
+</p>
+
+<p align="center">
+  <sup>1</sup>School of Information Science and Technology, Sanda University &nbsp;&nbsp;
+  <sup>2</sup>Tsinghua University &nbsp;&nbsp;
+  <sup>3</sup>Department of Basic Education, Sanda University
+</p>
+
+<p align="center">
+  Corresponding author: Wenxin Zhong
+</p>
+
+<p align="center">
   <a href="https://github.com/ZhangSiyu0066/RAH-VLA">
-    <img src="https://img.shields.io/badge/GitHub-RAH--VLA-blue" alt="GitHub">
+    <img src="https://img.shields.io/badge/Project-RAH--VLA-blue" alt="Project">
+  </a>
+  <a href="https://arxiv.org/abs/2512.23243">
+    <img src="https://img.shields.io/badge/arXiv-2512.23243-b31b1b.svg" alt="arXiv">
+  </a>
+  <a href="https://github.com/ZhangSiyu0066/RAH-VLA">
+    <img src="https://img.shields.io/badge/Code-GitHub-black" alt="Code">
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="License">
@@ -545,12 +565,12 @@ RAH-VLA 基于 GeoChat (CVPR 2024) 架构，增强了以下能力：
 }
 ```
 
-### DRIS-MSVLAM (本实现)
+### RAH-VLA (本实现)
 ```bibtex
-@inproceedings{zhang2025multimodal,
-  title={Multimodal Interpretation of Remote Sensing Images: Dynamic Resolution Input Strategy and Multi-scale Vision–Language Alignment Mechanism},
-  author={Zhang, Siyu and Shan, Lianlei and Qiu, Runhe},
-  booktitle={International Conference on Learning Representations (ICLR)},
+@article{zhang2025multimodal,
+  title={RAH-VLA: Resolution-Adaptive Hierarchical Vision-Language Alignment for Multimodal Remote Sensing Understanding},
+  author={Zhang, Siyu and Shan, Lianlei and Qiu, Runhe and Zhong, Wenxin},
+  journal={arXiv preprint arXiv:2512.23243},
   year={2025}
 }
 ```
@@ -597,6 +617,7 @@ RAH-VLA 基于 GeoChat (CVPR 2024) 架构，增强了以下能力：
 - [GeoChat 原始仓库](https://github.com/mbzuai-oryx/GeoChat)
 - [GeoChat 项目页面](https://mbzuai-oryx.github.io/GeoChat)
 - [GeoChat 论文 (arXiv)](https://arxiv.org/abs/2311.15826)
+- [RAH-VLA arXiv](https://arxiv.org/abs/2512.23243)
 
 ---
 
