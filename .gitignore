@@ -38,6 +38,7 @@ checkpoints/
 *.pth
 *.onnx
 *.whl
+RAH_VLA__Resolution_Adaptive_Hierarchical_Vision_Language_Alignment_for_Multimodal_Remote_Sensing_Understanding.pdf
 
 # Datasets / local storage
 /data/

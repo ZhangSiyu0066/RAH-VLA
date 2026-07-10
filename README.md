@@ -7,9 +7,6 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="License">
   </a>
-  <a href="RAH_VLA__Resolution_Adaptive_Hierarchical_Vision_Language_Alignment_for_Multimodal_Remote_Sensing_Understanding.pdf">
-    <img src="https://img.shields.io/badge/Paper-PDF-red" alt="Paper PDF">
-  </a>
 </p>
 
 <p align="center">
@@ -19,8 +16,6 @@
 RAH-VLA is a multimodal remote sensing vision-language framework built upon GeoChat. It addresses two practical limitations of existing remote sensing VLMs: fixed-resolution visual encoding, which can miss small objects or waste computation on homogeneous regions, and single-scale image-text alignment, which weakens object- and region-level semantic correspondence.
 
 The method introduces two coupled modules. **DRIS** performs coarse-to-fine token-level visual encoding and keeps high-resolution information for salient regions. **MS-VLAM** projects visual features into the language space and aligns them at object, region, and global levels. Together, they improve captioning, grounding, reasoning, hyperspectral generalization, and inference efficiency.
-
-**Paper**: [RAH-VLA: Resolution-Adaptive Hierarchical Vision-Language Alignment for Multimodal Remote Sensing Understanding](RAH_VLA__Resolution_Adaptive_Hierarchical_Vision_Language_Alignment_for_Multimodal_Remote_Sensing_Understanding.pdf)
 
 ## 🔭 Overview
 
