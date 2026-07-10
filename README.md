@@ -322,30 +322,30 @@ python geochat/train/train.py \
 
 ## 📚 Documentation
 
-### DRIS-MSVLAM 详细文档
+### DRIS-MSVLAM Documentation
 
-完整的技术文档和实现细节请参考：
-- **[README_DRIS_MSVLAM.md](README_DRIS_MSVLAM.md)** - DRIS-MSVLAM 实现总结
-- **[docs/DRIS_MSVLAM.md](docs/DRIS_MSVLAM.md)** - 详细技术文档
+For detailed technical documentation and implementation notes, see:
+- **[README_DRIS_MSVLAM.md](README_DRIS_MSVLAM.md)** - DRIS-MSVLAM implementation summary
+- **[docs/DRIS_MSVLAM.md](docs/DRIS_MSVLAM.md)** - detailed technical documentation
 
-包含内容：
-- 详细算法描述
-- 数学公式和方程
-- 使用示例和代码
-- 配置说明
-- 训练指南
-- 评估方法
-- 消融实验
-- 故障排除
+These documents include:
+- Detailed algorithm descriptions
+- Mathematical formulas and equations
+- Usage examples and code
+- Configuration instructions
+- Training guidelines
+- Evaluation protocols
+- Ablation studies
+- Troubleshooting
 - FAQ
 
-### 其他文档
+### Additional Documents
 
-- **[docs/MODEL_ZOO.md](docs/MODEL_ZOO.md)** - 模型权重和下载
-- **[docs/Evaluation.md](docs/Evaluation.md)** - 评估指南
-- **[docs/LoRA.md](docs/LoRA.md)** - LoRA 训练说明
-- **[docs/Data.md](docs/Data.md)** - 数据集说明
-- **[docs/Customize_Component.md](docs/Customize_Component.md)** - 自定义组件指南
+- **[docs/MODEL_ZOO.md](docs/MODEL_ZOO.md)** - model weights and download instructions
+- **[docs/Evaluation.md](docs/Evaluation.md)** - evaluation guide
+- **[docs/LoRA.md](docs/LoRA.md)** - LoRA training guide
+- **[docs/Data.md](docs/Data.md)** - dataset guide
+- **[docs/Customize_Component.md](docs/Customize_Component.md)** - component customization guide
 
 ---
 
