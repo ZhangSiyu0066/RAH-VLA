@@ -53,9 +53,42 @@ The implementation used in this repository follows the paper setting: Vicuna-7B-
 
 ### DRIS: Dynamic Resolution Input Strategy
 
-DRIS follows a coarse-to-fine visual encoding pipeline. It first downsamples the remote sensing image to capture global context with low computational cost, then estimates token-level saliency to select the most informative regions. These selected ROIs are refined at high resolution, while less informative homogeneous areas remain represented by coarse features. Finally, coarse and fine features are projected and fused into a resolution-adaptive representation.
+DRIS is the resolution-adaptive visual encoder of RAH-VLA. Remote sensing images usually contain both large homogeneous areas and tiny semantic objects. Processing every patch at high resolution is expensive, while processing the whole image at low resolution loses boundaries, textures, and small objects. DRIS resolves this trade-off with a coarse-to-fine allocation rule.
 
-This design is especially useful for remote sensing scenes, where small objects such as vehicles, buildings, roads, and storage tanks may occupy only a tiny fraction of a large image. Instead of processing the full image at uniformly high resolution, DRIS allocates high-resolution computation only to salient regions.
+The dynamic resolution assignment is formulated as:
+
+```text
+R(x, y) = R_high, if s(x, y) >= tau
+        = R_low,  otherwise
+
+tau = mu_s + lambda * sigma_s
+```
+
+Here, `s(x, y)` is the regional saliency score estimated from the low-resolution branch, `R_high` and `R_low` denote high- and low-resolution processing modes, and `tau` is an adaptive threshold computed from the mean `mu_s` and standard deviation `sigma_s` of the saliency map. The sensitivity coefficient `lambda` controls how strict the high-resolution selection is. In the paper setting, `lambda = 1.0` unless otherwise stated.
+
+After candidate salient regions are identified, a fixed-budget top-k strategy selects the final ROIs:
+
+```text
+P_ROI = Topk(GaussianBlur(A_coarse), k)
+```
+
+`A_coarse` is the coarse attention heatmap from the low-resolution branch. Gaussian smoothing suppresses noisy responses and keeps spatially stable salient regions, while `Topk` selects the highest-response regions. The paper uses `k = 5` to keep computation consistent across samples.
+
+For cross-resolution fusion, DRIS first combines coarse global context and fine local detail:
+
+```text
+F_fused = Upsample(F_coarse) + Crop(F_fine, Omega)
+```
+
+Because coarse and fine features come from different resolutions and receptive fields, they are projected into a shared latent space and normalized before final fusion:
+
+```text
+F_tilde_coarse = LN(W_c F_coarse)
+F_tilde_fine   = LN(W_f F_fine)
+F_fused        = Upsample(F_tilde_coarse) + Crop(F_tilde_fine, Omega)
+```
+
+This projection-based alignment lets the model preserve global scene context from the low-resolution branch while injecting high-resolution details from selected ROIs. Therefore, DRIS is not only an efficiency module; it also produces object-aware and region-aware visual representations for the downstream MS-VLAM alignment.
 
 <p align="center">
   <img src="images/Fig.3.png" width="95%" alt="Dynamic Resolution Input Strategy">
@@ -65,16 +98,62 @@ This design is especially useful for remote sensing scenes, where small objects 
 
 ### MS-VLAM: Multi-scale Vision-Language Alignment
 
-MS-VLAM aligns visual and textual semantics at three complementary levels. At the object level, fine-grained visual patches are matched with entity tokens such as buildings, roads, trees, or cars. At the region level, local contextual areas are aligned with phrases such as residential area or parking lot. At the global level, the whole image representation is aligned with sentence-level scene semantics.
+MS-VLAM organizes the DRIS-enhanced visual tokens into three semantic levels and aligns each level with the corresponding textual units. This is designed for remote sensing scenes where semantics are distributed across small objects, local regions, and global scene context.
 
-The final training objective combines caption generation with hierarchical alignment losses:
+**Object-level alignment.** Fine-grained object regions are aligned with entity-level text tokens. Given the visual feature map `V` and the `p`-th candidate object region `B_p`, the object visual and textual features are:
+
+```text
+v_obj^(p) = f_v(RoI(V, B_p))
+o_obj^(p) = f_t(e_p)
+cos(u, v) = u^T v / (||u|| ||v||)
+```
+
+The object-level loss uses localization-aware weighting, so accurately localized objects contribute more strongly:
+
+```text
+L_obj = 1 - (1 / P) * sum_p w_p * cos(v_obj^(p), o_obj^(p))
+
+w_p = IoU(B_hat_p, B_p) / sum_q IoU(B_hat_q, B_q)
+```
+
+**Region-level alignment.** Region-level features model local spatial context and object interactions. Visual regions are matched with phrase-level embeddings, such as `residential area`, `parking lot`, or `green space`. MS-VLAM combines hard region-phrase matching with contrastive soft matching:
+
+```text
+p_j = PhraseEmbed(t_j)
+L_reg^hard = 1 - (1 / K) * sum_k cos(v_k, p_{pi(k)})
+
+s_kj = v_k^T p_j / tau_c
+L_reg^NCE = -(1 / K) * sum_k log exp(s_{k,y(k)}) / sum_j exp(s_kj)
+
+L_reg = mu * L_reg^hard + (1 - mu) * L_reg^NCE
+```
+
+This lets the model handle one-to-many and many-to-one correspondences between visual regions and language phrases.
+
+**Global-level alignment.** The global representation captures holistic scene semantics. Spatial Pyramid Pooling aggregates the visual feature map at multiple scales, and the resulting vector is aligned with the sentence-level textual representation:
+
+```text
+g = SPP(V)
+L_glob = 1 - cos(g, t_[CLS])
+```
+
+The final hierarchical alignment objective combines the three semantic levels:
 
 ```text
 L_align = alpha * L_obj + beta * L_reg + gamma * L_glob
+alpha + beta + gamma = 1
+```
+
+In the paper, `alpha`, `beta`, and `gamma` are optimized jointly and normalized with a softmax operation, allowing adaptive balancing across object-, region-, and global-level supervision.
+
+Finally, hierarchical alignment is trained together with caption generation:
+
+```text
+L_caption = - sum_t log P_L(x_t | V, x_<t)
 L = L_caption + delta * L_align
 ```
 
-In practice, this encourages the model to produce captions that are not only fluent, but also grounded in fine-grained objects, local regions, and global scene context.
+This objective encourages generated captions and responses to be fluent, visually grounded, and semantically consistent across multiple spatial granularities.
 
 <p align="center">
   <img src="images/Fig.4.png" width="95%" alt="Multi-scale Vision-Language Alignment Mechanism">
