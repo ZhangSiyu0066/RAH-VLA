@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  Corresponding author: Wenxin Zhong
+  <img src="images/color_bar.svg" width="95%" height="10" alt="decorative color bar">
 </p>
 
 <p align="center">
