@@ -178,93 +178,6 @@ L = L_caption + delta * L_align
 
 This objective encourages generated captions and responses to be fluent, visually grounded, and semantically consistent across multiple spatial granularities.
 
-## 📊 Main Results
-
-### Result Highlights
-
-| Task | Dataset / Benchmark | Main result |
-|---|---|---|
-| Remote sensing captioning | NWPU-Captions, RSICD, UCM, Sydney | Best or highly competitive results across BLEU, METEOR, ROUGE-L, CIDEr, and SPICE. |
-| Visual grounding | DIOR-RSVG | **40.27 Accuracy@0.5**, outperforming the strongest baseline MoE-LoRA by **+2.41** points. |
-| GPT-4V-based evaluation | RS-GPT4V-Instruct | **6.574 overall score**, higher than Full-FT, LoRA, MoE-LoRA, and general VLM baselines. |
-| Hyperspectral generalization | HyperCAP | Overall gains over GeoChat-7B: **+24.9% BLEU-1**, **+43.9% METEOR**, **+33.2% ROUGE-L**, **+149.8% CIDEr**. |
-| Efficiency | FLOPs / latency / memory | Reduces FLOPs by **38.4%**, latency by **35.6%**, and memory by **25.3%** compared with the baseline. |
-
-### Image Captioning
-
-RAH-VLA is evaluated on four optical remote sensing captioning benchmarks. The model uses CLIP ViT-L/14 and Vicuna-7B-v1.5 in all rows below.
-
-| Dataset | BLEU-1 | BLEU-2 | BLEU-3 | BLEU-4 | METEOR | ROUGE-L | CIDEr | SPICE |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| NWPU-Captions | **0.889** | **0.812** | **0.748** | **0.689** | **0.458** | **0.791** | **2.061** | **0.334** |
-| RSICD | 0.772 | 0.662 | 0.578 | 0.505 | **0.392** | **0.672** | **2.781** | **0.501** |
-| UCM | **0.918** | **0.868** | **0.829** | **0.798** | **0.489** | **0.832** | **3.701** | **0.547** |
-| Sydney | **0.927** | **0.872** | **0.826** | **0.793** | **0.482** | **0.789** | **2.864** | **0.458** |
-
-### Visual Grounding and Multimodal Reasoning
-
-| Method | DIOR-RSVG Accuracy@0.5 | GPT-4V Complex Reasoning | GPT-4V Detailed Description | GPT-4V Overall |
-|---|---:|---:|---:|---:|
-| Qwen-VL-Chat | 25.05 | 2.648 | 2.282 | 2.599 |
-| LLaVA-1.5 | 9.52 | 5.210 | 5.088 | 5.194 |
-| Full-FT | 36.31 | 6.270 | 6.530 | 6.304 |
-| LoRA | 33.15 | 6.061 | 6.374 | 6.103 |
-| MoE-LoRA | 37.86 | 6.108 | 6.468 | 6.156 |
-| **RAH-VLA (Ours)** | **40.27** | **6.512** | **6.781** | **6.574** |
-
-The grounding result shows stronger fine-grained visual-text correspondence on DIOR-RSVG, while the GPT-4V-based evaluation indicates better response quality for remote sensing reasoning and detailed description.
-
-### HyperCAP Generalization
-
-To test cross-modality transfer, RAH-VLA is evaluated on hyperspectral image captioning using the HyperCAP benchmark.
-
-| Dataset | Method | BLEU-1 | METEOR | ROUGE-L | CIDEr |
-|---|---|---:|---:|---:|---:|
-| Botswana | GeoChat-7B | 0.0245 | 0.0563 | 0.0332 | 0.0128 |
-| Botswana | **RAH-VLA** | **0.0304** | **0.0815** | **0.0433** | **0.0370** |
-| Houston13 | GeoChat-7B | 0.0239 | 0.0572 | 0.0324 | 0.0146 |
-| Houston13 | **RAH-VLA** | **0.0339** | **0.1028** | **0.0515** | **0.0383** |
-| Indian Pines | GeoChat-7B | 0.0263 | 0.0581 | 0.0341 | 0.0155 |
-| Indian Pines | **RAH-VLA** | **0.0319** | **0.0758** | **0.0433** | **0.0329** |
-| KSC | GeoChat-7B | 0.0087 | 0.0206 | 0.0123 | 0.0082 |
-| KSC | **RAH-VLA** | **0.0109** | **0.0349** | **0.0169** | **0.0239** |
-| Overall | GeoChat-7B | 0.0214 | 0.0485 | 0.0284 | 0.0124 |
-| Overall | **RAH-VLA** | **0.0267** | **0.0698** | **0.0378** | **0.0310** |
-
-### Ablation and Efficiency
-
-| Setting | Accuracy@0.5 |
-|---|---:|
-| LoRA baseline | 33.15 |
-| + DRIS only | 35.62 |
-| + MS-VLAM only | 37.04 |
-| **DRIS + MS-VLAM** | **40.27** |
-| w/o Object-level alignment | 38.91 |
-| w/o Local-region-level alignment | 39.10 |
-| w/o Global-level alignment | 38.76 |
-
-| Method | FLOPs (G) | Time (ms) | Memory (GB) |
-|---|---:|---:|---:|
-| Baseline | 286.4 | 164.2 | 21.7 |
-| Token Pruning | 238.7 | 139.5 | 19.4 |
-| **RAH-VLA** | **176.3** | **105.8** | **16.2** |
-
-These results show that DRIS and MS-VLAM are complementary: adaptive visual perception improves feature quality, while hierarchical alignment improves semantic consistency. RAH-VLA also lowers computation and memory cost compared with fixed-resolution processing.
-
-## 🖼️ Visualization
-
-<p align="center">
-  <img src="images/visualization1.png" width="95%" alt="RAH-VLA visualization on optical remote sensing images">
-</p>
-
-<p align="center"><i>Visualization on optical remote sensing images. DRIS selects informative regions, while MS-VLAM strengthens correspondence between text tokens and visual regions.</i></p>
-
-<p align="center">
-  <img src="images/visualization2.png" width="95%" alt="RAH-VLA visualization on hyperspectral remote sensing images">
-</p>
-
-<p align="center"><i>Visualization on hyperspectral remote sensing images. The method maintains effective region selection and semantic alignment across sensing modalities.</i></p>
-
 ## 📁 项目结构
 
 ```
@@ -552,6 +465,93 @@ RAH-VLA 基于 GeoChat (CVPR 2024) 架构，增强了以下能力：
 - 改进的跨模态一致性
 
 ---
+
+## 📊 Main Results
+
+### Result Highlights
+
+| Task | Dataset / Benchmark | Main result |
+|---|---|---|
+| Remote sensing captioning | NWPU-Captions, RSICD, UCM, Sydney | Best or highly competitive results across BLEU, METEOR, ROUGE-L, CIDEr, and SPICE. |
+| Visual grounding | DIOR-RSVG | **40.27 Accuracy@0.5**, outperforming the strongest baseline MoE-LoRA by **+2.41** points. |
+| GPT-4V-based evaluation | RS-GPT4V-Instruct | **6.574 overall score**, higher than Full-FT, LoRA, MoE-LoRA, and general VLM baselines. |
+| Hyperspectral generalization | HyperCAP | Overall gains over GeoChat-7B: **+24.9% BLEU-1**, **+43.9% METEOR**, **+33.2% ROUGE-L**, **+149.8% CIDEr**. |
+| Efficiency | FLOPs / latency / memory | Reduces FLOPs by **38.4%**, latency by **35.6%**, and memory by **25.3%** compared with the baseline. |
+
+### Image Captioning
+
+RAH-VLA is evaluated on four optical remote sensing captioning benchmarks. The model uses CLIP ViT-L/14 and Vicuna-7B-v1.5 in all rows below.
+
+| Dataset | BLEU-1 | BLEU-2 | BLEU-3 | BLEU-4 | METEOR | ROUGE-L | CIDEr | SPICE |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| NWPU-Captions | **0.889** | **0.812** | **0.748** | **0.689** | **0.458** | **0.791** | **2.061** | **0.334** |
+| RSICD | 0.772 | 0.662 | 0.578 | 0.505 | **0.392** | **0.672** | **2.781** | **0.501** |
+| UCM | **0.918** | **0.868** | **0.829** | **0.798** | **0.489** | **0.832** | **3.701** | **0.547** |
+| Sydney | **0.927** | **0.872** | **0.826** | **0.793** | **0.482** | **0.789** | **2.864** | **0.458** |
+
+### Visual Grounding and Multimodal Reasoning
+
+| Method | DIOR-RSVG Accuracy@0.5 | GPT-4V Complex Reasoning | GPT-4V Detailed Description | GPT-4V Overall |
+|---|---:|---:|---:|---:|
+| Qwen-VL-Chat | 25.05 | 2.648 | 2.282 | 2.599 |
+| LLaVA-1.5 | 9.52 | 5.210 | 5.088 | 5.194 |
+| Full-FT | 36.31 | 6.270 | 6.530 | 6.304 |
+| LoRA | 33.15 | 6.061 | 6.374 | 6.103 |
+| MoE-LoRA | 37.86 | 6.108 | 6.468 | 6.156 |
+| **RAH-VLA (Ours)** | **40.27** | **6.512** | **6.781** | **6.574** |
+
+The grounding result shows stronger fine-grained visual-text correspondence on DIOR-RSVG, while the GPT-4V-based evaluation indicates better response quality for remote sensing reasoning and detailed description.
+
+### HyperCAP Generalization
+
+To test cross-modality transfer, RAH-VLA is evaluated on hyperspectral image captioning using the HyperCAP benchmark.
+
+| Dataset | Method | BLEU-1 | METEOR | ROUGE-L | CIDEr |
+|---|---|---:|---:|---:|---:|
+| Botswana | GeoChat-7B | 0.0245 | 0.0563 | 0.0332 | 0.0128 |
+| Botswana | **RAH-VLA** | **0.0304** | **0.0815** | **0.0433** | **0.0370** |
+| Houston13 | GeoChat-7B | 0.0239 | 0.0572 | 0.0324 | 0.0146 |
+| Houston13 | **RAH-VLA** | **0.0339** | **0.1028** | **0.0515** | **0.0383** |
+| Indian Pines | GeoChat-7B | 0.0263 | 0.0581 | 0.0341 | 0.0155 |
+| Indian Pines | **RAH-VLA** | **0.0319** | **0.0758** | **0.0433** | **0.0329** |
+| KSC | GeoChat-7B | 0.0087 | 0.0206 | 0.0123 | 0.0082 |
+| KSC | **RAH-VLA** | **0.0109** | **0.0349** | **0.0169** | **0.0239** |
+| Overall | GeoChat-7B | 0.0214 | 0.0485 | 0.0284 | 0.0124 |
+| Overall | **RAH-VLA** | **0.0267** | **0.0698** | **0.0378** | **0.0310** |
+
+### Ablation and Efficiency
+
+| Setting | Accuracy@0.5 |
+|---|---:|
+| LoRA baseline | 33.15 |
+| + DRIS only | 35.62 |
+| + MS-VLAM only | 37.04 |
+| **DRIS + MS-VLAM** | **40.27** |
+| w/o Object-level alignment | 38.91 |
+| w/o Local-region-level alignment | 39.10 |
+| w/o Global-level alignment | 38.76 |
+
+| Method | FLOPs (G) | Time (ms) | Memory (GB) |
+|---|---:|---:|---:|
+| Baseline | 286.4 | 164.2 | 21.7 |
+| Token Pruning | 238.7 | 139.5 | 19.4 |
+| **RAH-VLA** | **176.3** | **105.8** | **16.2** |
+
+These results show that DRIS and MS-VLAM are complementary: adaptive visual perception improves feature quality, while hierarchical alignment improves semantic consistency. RAH-VLA also lowers computation and memory cost compared with fixed-resolution processing.
+
+## 🖼️ Visualization
+
+<p align="center">
+  <img src="images/visualization1.png" width="95%" alt="RAH-VLA visualization on optical remote sensing images">
+</p>
+
+<p align="center"><i>Visualization on optical remote sensing images. DRIS selects informative regions, while MS-VLAM strengthens correspondence between text tokens and visual regions.</i></p>
+
+<p align="center">
+  <img src="images/visualization2.png" width="95%" alt="RAH-VLA visualization on hyperspectral remote sensing images">
+</p>
+
+<p align="center"><i>Visualization on hyperspectral remote sensing images. The method maintains effective region selection and semantic alignment across sensing modalities.</i></p>
 
 ## 📜 引用
 
