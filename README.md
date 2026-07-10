@@ -211,53 +211,53 @@ RAH-VLA/
 
 ## 🚀 Quick Start
 
-### 1. 安装依赖
+### 1. Install Dependencies
 
 ```bash
-# 克隆仓库
+# Clone the repository
 git clone git@github.com:ZhangSiyu0066/RAH-VLA.git
 cd RAH-VLA
 
-# 创建 conda 环境
+# Create a conda environment
 conda create -n rsvlm python=3.10 -y
 conda activate rsvlm
 
-# 安装包
+# Install the package
 pip install --upgrade pip  # enable PEP 660 support
 pip install -e .
 
-# 安装训练所需包
+# Install training dependencies
 pip install ninja
 pip install flash-attn --no-build-isolation
 ```
 
-### 2. 运行 DRIS-MSVLAM 演示
+### 2. Run the DRIS-MSVLAM Demo
 
 ```bash
-# 运行所有演示
+# Run all demos
 python demo_dris_msvlam.py
 
-# 运行特定演示
-python demo_dris_msvlam.py --demo dris    # 仅 DRIS
-python demo_dris_msvlam.py --demo msvlam  # 仅 MS-VLAM
-python demo_dris_msvlam.py --demo loss    # 仅损失函数
+# Run a specific demo
+python demo_dris_msvlam.py --demo dris    # DRIS only
+python demo_dris_msvlam.py --demo msvlam  # MS-VLAM only
+python demo_dris_msvlam.py --demo loss    # loss function only
 
-# 使用自定义图像
+# Use a custom image
 python demo_dris_msvlam.py --image path/to/image.png --demo all
 ```
 
-### 3. 配置模型
+### 3. Configure the Model
 
 ```python
 from config.dris_msvlam_config import get_config
 
-# 获取完整模型配置
+# Get the full model configuration
 config = get_config('full_model')
 
-# 获取消融实验配置
-config = get_config('dris_only')      # 仅 DRIS
-config = get_config('msvlam_only')    # 仅 MS-VLAM
-config = get_config('dris_msvlam_no_obj')  # MS-VLAM 无对象级
+# Get ablation configurations
+config = get_config('dris_only')      # DRIS only
+config = get_config('msvlam_only')    # MS-VLAM only
+config = get_config('dris_msvlam_no_obj')  # MS-VLAM without object-level alignment
 ```
 
 ---
