@@ -1,6 +1,10 @@
 # RAH-VLA: Resolution-Adaptive Hierarchical Vision-Language Alignment for Multimodal Remote Sensing Understanding
 
 <p align="center">
+  <img src="images/color_bar.svg" width="95%" height="10" alt="decorative color bar">
+</p>
+
+<p align="center">
   <a href="https://github.com/ZhangSiyu0066">Siyu Zhang</a><sup>1</sup>,
   Lianlei Shan<sup>2</sup>,
   Runhe Qiu<sup>1</sup>,
@@ -9,10 +13,6 @@
 
 <p align="center">
   <b><sup>1</sup>Sanda University, <sup>2</sup>Tsinghua University</b>
-</p>
-
-<p align="center">
-  <img src="images/color_bar.svg" width="95%" height="10" alt="decorative color bar">
 </p>
 
 <p align="center">
