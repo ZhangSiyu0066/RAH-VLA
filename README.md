@@ -1,13 +1,14 @@
 # RAH-VLA: Resolution-Adaptive Hierarchical Vision-Language Alignment for Multimodal Remote Sensing Understanding
 
 <p align="center">
-  <b>Siyu Zhang<sup>1</sup>, Lianlei Shan<sup>2</sup>, Runhe Qiu<sup>1</sup>, Wenxin Zhong<sup>3</sup></b>
+  <a href="https://github.com/ZhangSiyu0066">Siyu Zhang</a><sup>1</sup>,
+  Lianlei Shan<sup>2</sup>,
+  Runhe Qiu<sup>1</sup>,
+  Wenxin Zhong<sup>1</sup>
 </p>
 
 <p align="center">
-  <sup>1</sup>School of Information Science and Technology, Sanda University &nbsp;&nbsp;
-  <sup>2</sup>Tsinghua University &nbsp;&nbsp;
-  <sup>3</sup>Department of Basic Education, Sanda University
+  <b><sup>1</sup>Sanda University, <sup>2</sup>Tsinghua University</b>
 </p>
 
 <p align="center">
@@ -16,13 +17,13 @@
 
 <p align="center">
   <a href="https://github.com/ZhangSiyu0066/RAH-VLA">
-    <img src="https://img.shields.io/badge/Project-RAH--VLA-blue" alt="Project">
+    <img src="https://img.shields.io/badge/Project-Website-8ecae6" alt="Project">
   </a>
   <a href="https://arxiv.org/abs/2512.23243">
     <img src="https://img.shields.io/badge/arXiv-2512.23243-b31b1b.svg" alt="arXiv">
   </a>
   <a href="https://github.com/ZhangSiyu0066/RAH-VLA">
-    <img src="https://img.shields.io/badge/Code-GitHub-black" alt="Code">
+    <img src="https://img.shields.io/badge/Code-GitHub-222222" alt="Code">
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="License">
