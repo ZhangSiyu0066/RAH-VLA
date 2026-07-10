@@ -178,7 +178,7 @@ L = L_caption + delta * L_align
 
 This objective encourages generated captions and responses to be fluent, visually grounded, and semantically consistent across multiple spatial granularities.
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 RAH-VLA/
@@ -209,7 +209,7 @@ RAH-VLA/
 
 ---
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
 ### 1. 安装依赖
 
@@ -262,7 +262,7 @@ config = get_config('dris_msvlam_no_obj')  # MS-VLAM 无对象级
 
 ---
 
-## 🔧 训练模型
+## 🔧 Training
 
 ### 使用 DRIS-MSVLAM 训练
 
@@ -320,7 +320,7 @@ python geochat/train/train.py \
 
 ---
 
-## 📚 详细文档
+## 📚 Documentation
 
 ### DRIS-MSVLAM 详细文档
 
@@ -349,7 +349,7 @@ python geochat/train/train.py \
 
 ---
 
-## 🧪 消融实验
+## 🧪 Ablation Studies
 
 ### 可用配置
 
@@ -376,7 +376,7 @@ config_no_global = get_config('dris_msvlam_no_global')
 
 ---
 
-## 💡 使用建议
+## 💡 Practical Tips
 
 ### 内存优化
 - 使用梯度累积增加有效批次大小
@@ -397,7 +397,7 @@ config_no_global = get_config('dris_msvlam_no_global')
 
 ---
 
-## 🔬 核心算法
+## 🔬 Core Algorithms
 
 ### DRIS (动态分辨率输入)
 
@@ -447,7 +447,7 @@ L_align = α · L_obj + β · L_reg + γ · L_glob
 
 ---
 
-## 🏗️ 架构说明
+## 🏗️ Architecture Notes
 
 RAH-VLA 基于 GeoChat (CVPR 2024) 架构，增强了以下能力：
 
@@ -553,7 +553,7 @@ These results show that DRIS and MS-VLAM are complementary: adaptive visual perc
 
 <p align="center"><i>Visualization on hyperspectral remote sensing images. The method maintains effective region selection and semantic alignment across sensing modalities.</i></p>
 
-## 📜 引用
+## 📜 Citation
 
 如果您在研究中使用了 RAH-VLA 或 DRIS-MSVLAM，请引用以下论文：
 
@@ -579,7 +579,7 @@ These results show that DRIS and MS-VLAM are complementary: adaptive visual perc
 
 ---
 
-## 🙏 致谢
+## 🙏 Acknowledgements
 
 本项目基于以下开源项目：
 - **[GeoChat](https://github.com/mbzuai-oryx/GeoChat)** - CVPR 2024
@@ -590,13 +590,13 @@ These results show that DRIS and MS-VLAM are complementary: adaptive visual perc
 
 ---
 
-## 📄 许可证
+## 📄 License
 
 本项目遵循 Apache 2.0 许可证。详见 [LICENSE](LICENSE) 文件。
 
 ---
 
-## 🤝 贡献
+## 🤝 Contributing
 
 欢迎贡献！请遵循以下步骤：
 
@@ -608,13 +608,13 @@ These results show that DRIS and MS-VLAM are complementary: adaptive visual perc
 
 ---
 
-## 📧 联系方式
+## 📧 Contact
 
 如有问题或建议，请在 GitHub 上创建 issue。
 
 ---
 
-## 🔗 相关链接
+## 🔗 Related Links
 
 - [GeoChat 原始仓库](https://github.com/mbzuai-oryx/GeoChat)
 - [GeoChat 项目页面](https://mbzuai-oryx.github.io/GeoChat)
