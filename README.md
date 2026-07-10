@@ -1,48 +1,119 @@
 # RAH-VLA: Resolution-Adaptive Hierarchical Vision-Language Alignment for Multimodal Remote Sensing Understanding
 
 <p align="center">
-    <img src="https://i.imgur.com/waxVImv.png" alt="RAH-VLA">
+  <a href="https://github.com/ZhangSiyu0066/RAH-VLA">
+    <img src="https://img.shields.io/badge/GitHub-RAH--VLA-blue" alt="GitHub">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="License">
+  </a>
 </p>
 
-#### 基于 GeoChat (CVPR 2024) 的扩展实现
+RAH-VLA is a resolution-adaptive hierarchical vision-language alignment framework for multimodal remote sensing understanding. It is built on the GeoChat codebase and introduces two core components:
 
-#### **ZhangSiyu0066**
+- **DRIS**: Dynamic Resolution Input Strategy for coarse-to-fine, token-level visual encoding.
+- **MS-VLAM**: Multi-scale Vision-Language Alignment Mechanism for object-, region-, and global-level semantic alignment.
 
-[![GitHub](https://img.shields.io/badge/GitHub-RAH--VLA-blue)](https://github.com/ZhangSiyu0066/RAH-VLA)
-[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
+The framework is evaluated on remote sensing captioning, visual grounding, GPT-4V-based multimodal evaluation, hyperspectral captioning, ablation studies, and efficiency analysis.
 
----
+**Paper**: [RAH-VLA PDF](RAH_VLA__Resolution_Adaptive_Hierarchical_Vision_Language_Alignment_for_Multimodal_Remote_Sensing_Understanding.pdf)
 
-## 📢 项目介绍
+## Overview
 
-RAH-VLA (Resolution-Adaptive Hierarchical Vision-Language Alignment) 是基于 GeoChat 项目的增强版本，面向多模态遥感理解任务，集成了两个核心创新组件：
+<p align="center">
+  <img src="images/Fig.1.png" width="95%" alt="Motivation and overview of RAH-VLA">
+</p>
 
-### 🎯 核心特性
+RAH-VLA targets two common limitations in remote sensing vision-language models: fixed-resolution visual processing and single-level image-text alignment. DRIS allocates more visual computation to informative regions while preserving global context, and MS-VLAM aligns visual and textual representations at multiple semantic levels.
 
-1. **DRIS (Dynamic Resolution Input Strategy)** - 动态分辨率输入策略
-   - 粗到细的两阶段处理
-   - 基于显著性的 ROI 选择
-   - FPN 特征融合
-   - 计算效率提升 2-3 倍
+<p align="center">
+  <img src="images/Fig.2.png" width="95%" alt="RAH-VLA framework">
+</p>
 
-2. **MS-VLAM (Multi-scale Vision-Language Alignment Mechanism)** - 多尺度视觉-语言对齐机制
-   - 对象级对齐 (Object-level)
-   - 局部区域级对齐 (Local-region-level)
-   - 全局级对齐 (Global-level)
-   - 灵活的损失函数组合
+## Main Results
 
-### 📊 性能提升
+### Image Captioning
 
-在 DIOR-RSVG 数据集上的实验结果：
+RAH-VLA achieves strong captioning performance on four benchmark remote sensing datasets. The table below reports the RAH-VLA rows from the paper.
 
-| 配置 | Accuracy@0.5 | 提升 |
-|------|-------------|------|
-| 基线 (GeoChat LoRA) | 33.15 | - |
-| 仅 DRIS | 35.62 | +2.47 |
-| 仅 MS-VLAM | 37.04 | +3.89 |
-| **完整模型 (DRIS + MS-VLAM)** | **40.27** | **+7.12** |
+| Dataset | Visual Encoder | Text Decoder | BLEU-1 | BLEU-2 | BLEU-3 | BLEU-4 | METEOR | ROUGE-L | CIDEr | SPICE |
+|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| NWPU-Captions | CLIP ViT-L/14 | Vicuna-7B-v1.5 | **0.889** | **0.812** | **0.748** | **0.689** | **0.458** | **0.791** | **2.061** | **0.334** |
+| RSICD | CLIP ViT-L/14 | Vicuna-7B-v1.5 | 0.772 | 0.662 | 0.578 | 0.505 | **0.392** | **0.672** | **2.781** | **0.501** |
+| UCM | CLIP ViT-L/14 | Vicuna-7B-v1.5 | **0.918** | **0.868** | **0.829** | **0.798** | **0.489** | **0.832** | **3.701** | **0.547** |
+| Sydney | CLIP ViT-L/14 | Vicuna-7B-v1.5 | **0.927** | **0.872** | **0.826** | **0.793** | **0.482** | **0.789** | **2.864** | **0.458** |
 
----
+### Visual Grounding on DIOR-RSVG
+
+| Method | Accuracy@0.5 |
+|---|---:|
+| Qwen-VL-Chat | 25.05 |
+| LLaVA-1.5 | 9.52 |
+| Full-FT | 36.31 |
+| LoRA | 33.15 |
+| MoE-LoRA | 37.86 |
+| **RAH-VLA (Ours)** | **40.27** |
+
+### GPT-4V-Based Evaluation
+
+| Method | Complex Reasoning & Conversation | Detailed Description | Overall Score |
+|---|---:|---:|---:|
+| LLaVA-1.5 | 5.210 | 5.088 | 5.194 |
+| Qwen-VL-Chat | 2.648 | 2.282 | 2.599 |
+| InternLM-XC2 | 5.312 | 4.392 | 5.189 |
+| Full-FT | 6.270 | 6.530 | 6.304 |
+| LoRA | 6.061 | 6.374 | 6.103 |
+| MoE-LoRA | 6.108 | 6.468 | 6.156 |
+| **RAH-VLA (Ours)** | **6.512** | **6.781** | **6.574** |
+
+### Generalization on HyperCAP
+
+| Dataset | Method | BLEU-1 | METEOR | ROUGE-L | CIDEr |
+|---|---|---:|---:|---:|---:|
+| Botswana | GeoChat-7B | 0.0245 | 0.0563 | 0.0332 | 0.0128 |
+| Botswana | **RAH-VLA (Ours)** | **0.0304** | **0.0815** | **0.0433** | **0.0370** |
+| Houston13 | GeoChat-7B | 0.0239 | 0.0572 | 0.0324 | 0.0146 |
+| Houston13 | **RAH-VLA (Ours)** | **0.0339** | **0.1028** | **0.0515** | **0.0383** |
+| Indian Pines | GeoChat-7B | 0.0263 | 0.0581 | 0.0341 | 0.0155 |
+| Indian Pines | **RAH-VLA (Ours)** | **0.0319** | **0.0758** | **0.0433** | **0.0329** |
+| KSC | GeoChat-7B | 0.0087 | 0.0206 | 0.0123 | 0.0082 |
+| KSC | **RAH-VLA (Ours)** | **0.0109** | **0.0349** | **0.0169** | **0.0239** |
+| Overall | GeoChat-7B | 0.0214 | 0.0485 | 0.0284 | 0.0124 |
+| Overall | **RAH-VLA (Ours)** | **0.0267** | **0.0698** | **0.0378** | **0.0310** |
+
+Overall relative improvements over GeoChat-7B are **+24.9% BLEU-1**, **+43.9% METEOR**, **+33.2% ROUGE-L**, and **+149.8% CIDEr**.
+
+### Ablation on DIOR-RSVG
+
+| ID | DRIS | MS-VLAM | MS-VLAM Sub-modules | Accuracy@0.5 |
+|---|---|---|---|---:|
+| A | No | No | - | 33.15 |
+| B | Yes | No | - | 35.62 |
+| C | No | Yes | Full | 37.04 |
+| D | Yes | Yes | Full | **40.27** |
+| E | Yes | Yes | w/o Object-level | 38.91 |
+| F | Yes | Yes | w/o Local-region-level | 39.10 |
+| G | Yes | Yes | w/o Global-level | 38.76 |
+
+### Efficiency
+
+| Method | FLOPs (G) | Time (ms) | Memory (GB) |
+|---|---:|---:|---:|
+| Baseline | 286.4 | 164.2 | 21.7 |
+| Token Pruning | 238.7 | 139.5 | 19.4 |
+| **RAH-VLA (Ours)** | **176.3** | **105.8** | **16.2** |
+
+Compared with the baseline, RAH-VLA reduces FLOPs by **38.4%**, latency by **35.6%**, and memory consumption by **25.3%**.
+
+## Visualization
+
+<p align="center">
+  <img src="images/visualization1.png" width="95%" alt="RAH-VLA visualization on optical remote sensing images">
+</p>
+
+<p align="center">
+  <img src="images/visualization2.png" width="95%" alt="RAH-VLA visualization on hyperspectral remote sensing images">
+</p>
 
 ## 📁 项目结构
 
